@@ -50,6 +50,7 @@ export const send = async (event: string, params: Params = {}) => {
     [`User-Agent`]: getUserAgent(),
     [`X-UserID`]: params.userId,
     [`X-API-KEY`]: id || undefined,
+    [`X-SessionID`]: undefined,
   });
 
   const body = createBody({
