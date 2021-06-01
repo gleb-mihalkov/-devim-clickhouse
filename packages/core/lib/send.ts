@@ -4,26 +4,61 @@ import { createBody } from './createBody';
 import { getConfig } from './config';
 
 /**
+ * Дополнительные параметры события.
+ */
+type Params = {
+  /**
+   * Уникальный идентификатор авторизованного пользователя.
+   */
+  userId?: string;
+
+  /**
+   * Дополнительное значение, передаваемое вместе с событием.
+   */
+  payload?: any;
+
+  /**
+   * Указывает, что информацию, отправляемую на сервер, нужно логгировать в
+   * браузерную консоль.
+   *
+   * Информация записывается в режиме verbose и c префиксом `clickhouse_event`.
+   */
+  verbose?: boolean;
+};
+
+/**
  * Отправляет указанное событие в сервис аналитики.
  * @param event Название события.
- * @param userId Опциональный идентификатор текущего пользователя.
- * @param payload Опциональный дополнительный параметр события.
+ * @param params Дополнительные параметры события.
  */
-export const send = async (event: string, userId?: string, payload?: any) => {
+export const send = async (event: string, params: Params = {}) => {
   const { url, id } = getConfig();
 
   const headers = createHeaders({
     [`Content-Type`]: 'application/json',
     [`Accept`]: 'application/json',
     [`User-Agent`]: getUserAgent(),
-    [`X-UserID`]: userId,
+    [`X-UserID`]: params.userId,
     [`X-API-KEY`]: id || undefined,
   });
 
   const body = createBody({
     event,
-    eventValue: payload,
+    eventValue: params.payload,
+    fingerprintID: undefined,
+    referer: undefined,
+    source: undefined,
+    screenWidth: undefined,
+    screenHeight: undefined,
+    timeZone: undefined,
+    region: undefined,
+    isIncognito: undefined,
+    localTime: undefined,
   });
+
+  if (params.verbose && typeof console !== 'undefined') {
+    console.debug('clickhouse_event', { ...headers, ...body });
+  }
 
   if (url) {
     try {
