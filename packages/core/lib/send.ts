@@ -5,6 +5,8 @@ import { stringifyTime } from './stringifyTime';
 import { getTimeZone } from './getTimeZone';
 import { getScreenHeight } from './getScreenHeight';
 import { getScreenWidth } from './getScreenWidth';
+import { getUtmSource } from './getUtmSource';
+import { getReferrer } from './getReferrer';
 import { getConfig } from './config';
 
 /**
@@ -34,6 +36,12 @@ type Params = {
    * браузерное время.
    */
   time?: Date;
+
+  /**
+   * Источник перехода на сайт (задаётся в адресе страницы). Если не указано,
+   * функция попробует получить актуальное значение из адреса страницы.
+   */
+  utmSource?: string;
 };
 
 /**
@@ -57,8 +65,8 @@ export const send = async (event: string, params: Params = {}) => {
     event,
     eventValue: params.payload,
     fingerprintID: undefined,
-    referer: undefined,
-    source: undefined,
+    referer: getReferrer(),
+    source: params.utmSource ?? getUtmSource(),
     screenWidth: getScreenWidth(),
     screenHeight: getScreenHeight(),
     timeZone: getTimeZone(),
