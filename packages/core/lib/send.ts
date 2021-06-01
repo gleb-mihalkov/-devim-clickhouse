@@ -1,6 +1,7 @@
 import { createHeaders } from './createHeaders';
 import { getUserAgent } from './getUserAgent';
 import { createBody } from './createBody';
+import { stringifyTime } from './stringifyTime';
 import { getConfig } from './config';
 
 /**
@@ -24,6 +25,12 @@ type Params = {
    * Информация записывается в режиме verbose и c префиксом `clickhouse_event`.
    */
   verbose?: boolean;
+
+  /**
+   * Время отправки события. Если не указано, будет использовано текущее
+   * браузерное время.
+   */
+  time?: Date;
 };
 
 /**
@@ -53,7 +60,7 @@ export const send = async (event: string, params: Params = {}) => {
     timeZone: undefined,
     region: undefined,
     isIncognito: undefined,
-    localTime: undefined,
+    localTime: stringifyTime(params.time ?? new Date()),
   });
 
   if (params.verbose && typeof console !== 'undefined') {
