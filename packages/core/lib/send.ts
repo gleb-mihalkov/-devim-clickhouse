@@ -3,6 +3,8 @@ import { getUserAgent } from './getUserAgent';
 import { createBody } from './createBody';
 import { stringifyTime } from './stringifyTime';
 import { getTimeZone } from './getTimeZone';
+import { getScreenHeight } from './getScreenHeight';
+import { getScreenWidth } from './getScreenWidth';
 import { getConfig } from './config';
 
 /**
@@ -56,8 +58,8 @@ export const send = async (event: string, params: Params = {}) => {
     fingerprintID: undefined,
     referer: undefined,
     source: undefined,
-    screenWidth: undefined,
-    screenHeight: undefined,
+    screenWidth: getScreenWidth(),
+    screenHeight: getScreenHeight(),
     timeZone: getTimeZone(),
     region: undefined,
     isIncognito: undefined,

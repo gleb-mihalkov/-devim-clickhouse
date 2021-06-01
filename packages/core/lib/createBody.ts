@@ -6,5 +6,6 @@ import { setBody } from './setBody';
  * будет подставлено `null`.
  * @param values Коллекция значений.
  */
-export const createBody = (values: Record<string, string | void>) =>
-  setBody({}, values);
+export const createBody = (
+  values: Record<string, string | number | boolean | void>
+) => setBody({}, values);
