@@ -8,7 +8,15 @@
 
 ```html
 <script type="text/javascript">
-  var devimClickhouse = [];
+  var devimClickhouse = [
+    {
+      type: 'initialize',
+      payload: {
+        url: 'Полный адрес API',
+        id: 'Уникальный идентификатор API',
+      },
+    },
+  ];
 </script>
 ```
 
