@@ -2,6 +2,7 @@ import { createHeaders } from './createHeaders';
 import { getUserAgent } from './getUserAgent';
 import { createBody } from './createBody';
 import { stringifyTime } from './stringifyTime';
+import { getTimeZone } from './getTimeZone';
 import { getConfig } from './config';
 
 /**
@@ -57,7 +58,7 @@ export const send = async (event: string, params: Params = {}) => {
     source: undefined,
     screenWidth: undefined,
     screenHeight: undefined,
-    timeZone: undefined,
+    timeZone: getTimeZone(),
     region: undefined,
     isIncognito: undefined,
     localTime: stringifyTime(params.time ?? new Date()),
