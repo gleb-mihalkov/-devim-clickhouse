@@ -5,6 +5,7 @@ import { stringifyTime } from './stringifyTime';
 import { getTimeZone } from './getTimeZone';
 import { getScreenHeight } from './getScreenHeight';
 import { getScreenWidth } from './getScreenWidth';
+import { getFingerprint } from './getFingerprint';
 import { getUtmSource } from './getUtmSource';
 import { getReferrer } from './getReferrer';
 import { getConfig } from './config';
@@ -64,7 +65,7 @@ export const send = async (event: string, params: Params = {}) => {
   const body = createBody({
     event,
     eventValue: params.payload,
-    fingerprintID: undefined,
+    fingerprintID: getFingerprint(),
     referer: getReferrer(),
     source: params.utmSource ?? getUtmSource(),
     screenWidth: getScreenWidth(),
