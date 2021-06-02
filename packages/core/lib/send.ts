@@ -10,6 +10,7 @@ import { getUtmSource } from './getUtmSource';
 import { getSessionId } from './getSessionId';
 import { getReferrer } from './getReferrer';
 import { getConfig } from './config';
+import { stringifyTimezone } from './stringifyTimezone';
 
 /**
  * Дополнительные параметры события.
@@ -19,6 +20,18 @@ type Params = {
    * Уникальный идентификатор авторизованного пользователя.
    */
   userId?: string;
+
+  /**
+   * Уникальный идентификатор устройства, с которого пользователь зашел на
+   * сайт. Если не указано, функция определит его самостоятельно.
+   */
+  fingerprint?: string;
+
+  /**
+   * Указывает, что переданное событие является событием прекращения
+   * авторизации пользователя.
+   */
+  logout?: boolean;
 
   /**
    * Дополнительное значение, передаваемое вместе с событием.
@@ -40,16 +53,40 @@ type Params = {
   time?: Date;
 
   /**
+   * Часовой пояс пользователя (например, `3` для Москвы или `-4` для
+   * Нью-Йорка). Если не указано, функция определит его самостоятельно.
+   */
+  timezone?: number;
+
+  /**
+   * Высота экрана пользователя в пикселях. Если не указано, функция определит
+   * её самостоятельно.
+   */
+  screenHeight?: number;
+
+  /**
+   * Ширина экрана пользователя в пикселях. Если не указано, функция
+   * определит её самостоятельно.
+   */
+  screenWidth?: number;
+
+  /**
+   * Содержимое заголовка `Referrer`, с которым пользователь пришёл на страницу.
+   * Если не указано, функция определит его самостоятельно.
+   */
+  referrer?: string;
+
+  /**
+   * Содержимое заголовка `User-Agent`, с которым пользователь пришёл на
+   * страницу. Если не указано, функция определит его самостоятельно.
+   */
+  userAgent?: string;
+
+  /**
    * Источник перехода на сайт (задаётся в адресе страницы). Если не указано,
    * функция попробует получить актуальное значение из адреса страницы.
    */
   utmSource?: string;
-
-  /**
-   * Указывает, что переданное событие является событием прекращения
-   * авторизации пользователя.
-   */
-  logout?: boolean;
 };
 
 /**
@@ -63,7 +100,7 @@ export const send = async (event: string, params: Params = {}) => {
   const headers = createHeaders({
     [`Content-Type`]: 'application/json',
     [`Accept`]: 'application/json',
-    [`User-Agent`]: getUserAgent(),
+    [`User-Agent`]: params.userAgent ?? getUserAgent(),
     [`X-UserID`]: params.userId,
     [`X-API-KEY`]: config.id || undefined,
     [`X-SessionID`]: getSessionId(params.logout),
@@ -72,14 +109,17 @@ export const send = async (event: string, params: Params = {}) => {
   const body = createBody({
     event,
     eventValue: params.payload,
-    fingerprintID: getFingerprint(),
-    referer: getReferrer(),
+    fingerprintID: params.fingerprint ?? getFingerprint(),
+    referer: params.referrer ?? getReferrer(),
     source: params.utmSource ?? getUtmSource(),
-    screenWidth: getScreenWidth(),
-    screenHeight: getScreenHeight(),
-    timeZone: getTimeZone(),
+    screenHeight: params.screenHeight ?? getScreenHeight(),
+    screenWidth: params.screenWidth ?? getScreenWidth(),
     isIncognito: undefined,
     localTime: stringifyTime(params.time ?? new Date()),
+    timeZone:
+      params.timezone == null
+        ? getTimeZone()
+        : stringifyTimezone(params.timezone),
   });
 
   if (params.verbose && typeof console !== 'undefined') {
