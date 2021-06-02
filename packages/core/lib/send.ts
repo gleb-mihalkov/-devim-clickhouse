@@ -6,6 +6,7 @@ import { getTimeZone } from './getTimeZone';
 import { getScreenHeight } from './getScreenHeight';
 import { getScreenWidth } from './getScreenWidth';
 import { getFingerprint } from './getFingerprint';
+import { getIsIncognito } from './getIsIncognito';
 import { getUtmSource } from './getUtmSource';
 import { getSessionId } from './getSessionId';
 import { getReferrer } from './getReferrer';
@@ -114,7 +115,7 @@ export const send = async (event: string, params: Params = {}) => {
     source: params.utmSource ?? getUtmSource(),
     screenHeight: params.screenHeight ?? getScreenHeight(),
     screenWidth: params.screenWidth ?? getScreenWidth(),
-    isIncognito: undefined,
+    isIncognito: await getIsIncognito(),
     localTime: stringifyTime(params.time ?? new Date()),
     timeZone:
       params.timezone == null
