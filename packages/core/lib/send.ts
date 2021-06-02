@@ -78,7 +78,6 @@ export const send = async (event: string, params: Params = {}) => {
     screenWidth: getScreenWidth(),
     screenHeight: getScreenHeight(),
     timeZone: getTimeZone(),
-    region: undefined,
     isIncognito: undefined,
     localTime: stringifyTime(params.time ?? new Date()),
   });
