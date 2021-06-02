@@ -7,6 +7,7 @@ import { getScreenHeight } from './getScreenHeight';
 import { getScreenWidth } from './getScreenWidth';
 import { getFingerprint } from './getFingerprint';
 import { getUtmSource } from './getUtmSource';
+import { getSessionId } from './getSessionId';
 import { getReferrer } from './getReferrer';
 import { getConfig } from './config';
 
@@ -43,6 +44,12 @@ type Params = {
    * функция попробует получить актуальное значение из адреса страницы.
    */
   utmSource?: string;
+
+  /**
+   * Указывает, что переданное событие является событием прекращения
+   * авторизации пользователя.
+   */
+  logout?: boolean;
 };
 
 /**
@@ -51,15 +58,15 @@ type Params = {
  * @param params Дополнительные параметры события.
  */
 export const send = async (event: string, params: Params = {}) => {
-  const { url, id } = getConfig();
+  const config = getConfig();
 
   const headers = createHeaders({
     [`Content-Type`]: 'application/json',
     [`Accept`]: 'application/json',
     [`User-Agent`]: getUserAgent(),
     [`X-UserID`]: params.userId,
-    [`X-API-KEY`]: id || undefined,
-    [`X-SessionID`]: undefined,
+    [`X-API-KEY`]: config.id || undefined,
+    [`X-SessionID`]: getSessionId(params.logout),
   });
 
   const body = createBody({
@@ -77,12 +84,12 @@ export const send = async (event: string, params: Params = {}) => {
   });
 
   if (params.verbose && typeof console !== 'undefined') {
-    console.debug('clickhouse_event', { ...headers, ...body });
+    console.debug('clickhouse_event', event, body);
   }
 
-  if (url) {
+  if (config.url) {
     try {
-      await fetch(url, {
+      await fetch(config.url, {
         headers,
         method: 'post',
         body: JSON.stringify(body),
