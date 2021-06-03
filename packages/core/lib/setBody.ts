@@ -16,7 +16,7 @@ export const setBody = (
 
   for (let i = 0; i < length; i += 1) {
     const key = keys[i];
-    const value = values[key] ?? null;
+    const value = values[key] == null ? null : values[key];
 
     nextBody = {
       ...nextBody,
