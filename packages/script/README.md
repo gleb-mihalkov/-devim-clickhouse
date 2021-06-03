@@ -35,6 +35,5 @@
 devimClickhouse.push({
   type: 'eventName',
   payload: 'Optional payload for specified event',
-  userId: 'Optional identificator of current user',
 });
 ```

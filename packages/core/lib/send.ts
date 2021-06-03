@@ -7,7 +7,7 @@ import { getScreenHeight } from './getScreenHeight';
 import { getScreenWidth } from './getScreenWidth';
 import { getFingerprint } from './getFingerprint';
 import { getIsIncognito } from './getIsIncognito';
-import { getUtmSource } from './getUtmSource';
+import { getSearchValue } from './getSearchValue';
 import { getUserAgent } from './getUserAgent';
 import { getSessionId } from './getSessionId';
 import { getReferrer } from './getReferrer';
@@ -36,7 +36,11 @@ export const send = async (event: string, params: Params = {}) => {
     eventValue: params.payload,
     fingerprintID: params.fingerprint ?? getFingerprint(),
     referer: params.referrer ?? getReferrer(),
-    source: params.utmSource ?? getUtmSource(),
+    source: params.utmSource ?? getSearchValue('utm_source'),
+    campaign: params.utmCampaign ?? getSearchValue('utm_campaign'),
+    medium: params.utmMedium ?? getSearchValue('utm_medium'),
+    content: params.utmContent ?? getSearchValue('utm_content'),
+    term: params.utmTerm ?? getSearchValue('utm_term'),
     screenHeight: params.screenHeight ?? getScreenHeight(),
     screenWidth: params.screenWidth ?? getScreenWidth(),
     isIncognito: await getIsIncognito(),
