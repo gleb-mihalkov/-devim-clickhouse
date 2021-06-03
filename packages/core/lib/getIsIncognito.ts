@@ -20,7 +20,7 @@ export const getIsIncognito = () => {
 
       if (isChromeOpera) {
         navigator.storage.estimate().then(({ quota }) => {
-          (quota ?? 0) < 120000000 ? yes() : not();
+          (quota || 0) < 120000000 ? yes() : not();
         });
       }
 
