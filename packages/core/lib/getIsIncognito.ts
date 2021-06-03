@@ -86,6 +86,7 @@ export const getIsIncognito = () => {
 
     function detectEdgeIE10(): boolean {
       const isEdgeIE10 =
+        // @ts-ignore
         !window.indexedDB && (window.PointerEvent || window.MSPointerEvent);
 
       if (isEdgeIE10) {

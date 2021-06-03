@@ -1,3 +1,9 @@
-import { helloWorld } from '@devim-clickhouse/core';
+import { bootstrap } from './bootstrap';
 
-helloWorld();
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrap, false);
+  } else {
+    bootstrap();
+  }
+}
