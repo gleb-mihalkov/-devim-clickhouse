@@ -1,6 +1,6 @@
 {
   "name": "@devim-clickhouse/core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Набор базовых утилит для интеграции с ClickHouse",
   "main": "dist/index.js",
   "author": "gleb-mikhalkov",
@@ -26,6 +26,5 @@
     "js-cookie": "^2.2.1",
     "memoize-one": "^5.2.1",
     "uuid": "^8.3.2"
-  },
-  "devDependencies": {}
+  }
 }
