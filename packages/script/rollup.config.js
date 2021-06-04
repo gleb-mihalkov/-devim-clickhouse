@@ -1,7 +1,7 @@
 import nodePolyfills from 'rollup-plugin-node-polyfills';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import commonJs from 'rollup-plugin-commonjs';
-import typeScript from 'rollup-plugin-typescript2';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonJs from '@rollup/plugin-commonjs';
+import typeScript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
 const getPlugins = () => [

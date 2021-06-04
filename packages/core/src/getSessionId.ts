@@ -1,4 +1,4 @@
-import Cookie from 'js-cookie';
+import * as Cookie from 'js-cookie';
 import { v4 } from 'uuid';
 
 import { getDomain } from './getDomain';
