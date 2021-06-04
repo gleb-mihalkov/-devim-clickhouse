@@ -22,7 +22,6 @@ export const setHeaders = (
       continue;
     }
 
-    // @ts-ignore
     nextHeaders = {
       ...nextHeaders,
       [key]: value,

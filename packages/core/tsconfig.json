@@ -2,7 +2,9 @@
   "compilerOptions": {
     "lib": ["esnext", "dom", "dom.iterable"],
     "moduleResolution": "node",
-    "baseUrl": "lib",
+    "baseUrl": "src",
+    "target": "esnext",
+    "outDir": "dist",
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -16,5 +18,5 @@
     "noUnusedParameters": true,
     "strictNullChecks": true
   },
-  "include": ["lib/**/*"]
+  "include": ["src/**/*"]
 }

@@ -15,12 +15,11 @@ export const getIsIncognito = () => {
       // https://developers.google.com/web/updates/2017/08/estimating-available-storage-space
       const isChromeOpera =
         /(?=.*(opera|chrome)).*/i.test(navigator.userAgent) &&
-        navigator.storage &&
-        navigator.storage.estimate;
+        navigator.storage?.estimate;
 
       if (isChromeOpera) {
         navigator.storage.estimate().then(({ quota }) => {
-          (quota || 0) < 120000000 ? yes() : not();
+          (quota ?? 0) < 120000000 ? yes() : not();
         });
       }
 
