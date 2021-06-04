@@ -1,6 +1,6 @@
 {
   "name": "@devim-clickhouse/core",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Набор базовых утилит для интеграции с ClickHouse",
   "main": "dist/index.js",
   "author": "gleb-mikhalkov",
