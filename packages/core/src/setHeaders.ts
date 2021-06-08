@@ -1,4 +1,21 @@
 /**
+ * Преобразует переданное значение в формат, пригодный для отправки в заголовке
+ * запроса к API.
+ * @param value Исходное значение.
+ */
+const mapValue = (value: any) => {
+  if (value == null) {
+    return undefined;
+  }
+
+  if (typeof value === 'boolean') {
+    return String(Number(value));
+  }
+
+  return String(value);
+};
+
+/**
  * Добавляет в исходную коллекцию заголовков запроса к сервису указанную
  * коллекцию значений. Если какое-либо из значений равно `undefined`, заголовок
  * добавлен не будет. Возвращает новую коллекцию заголовков.
@@ -16,7 +33,7 @@ export const setHeaders = (
 
   for (let i = 0; i < length; i += 1) {
     const key = keys[i];
-    const value = values[key];
+    const value = mapValue(values[key]);
 
     if (value == null) {
       continue;
