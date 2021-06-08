@@ -1,6 +1,6 @@
 {
   "name": "@devim-clickhouse/script",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Предоставляет возможность интеграции с сервисом ClickHouse с помощью подключаемого скрипта",
   "main": "dist/index.js",
   "author": "gleb-mikhalkov",
@@ -33,7 +33,7 @@
     "typescript": "^4.3.2"
   },
   "dependencies": {
-    "@devim-clickhouse/core": "^1.0.7"
+    "@devim-clickhouse/core": "^1.0.8"
   },
   "gitHead": "8f5ded5a16d2b03913d962c7016e71149bb04518"
 }
