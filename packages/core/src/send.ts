@@ -12,6 +12,7 @@ import { getUserAgent } from './getUserAgent';
 import { getSessionId } from './getSessionId';
 import { getReferrer } from './getReferrer';
 import { getTimeZone } from './getTimeZone';
+import { getHref } from './getHref';
 import { getConfig } from './config';
 
 /**
@@ -49,6 +50,7 @@ export const send = async (event: string, params: Params = {}) => {
       params.timezone == null
         ? getTimeZone()
         : stringifyTimezone(params.timezone),
+    page: params.href ?? getHref(),
   });
 
   if (params.verbose && typeof console !== 'undefined') {
