@@ -1,60 +1,61 @@
-import { Params } from './Params';
+import { Event } from './Event';
 import { createHeaders } from './createHeaders';
 import { createBody } from './createBody';
 import { stringifyTimezone } from './stringifyTimezone';
 import { stringifyTime } from './stringifyTime';
-import { getScreenHeight } from './getScreenHeight';
-import { getScreenWidth } from './getScreenWidth';
-import { getFingerprint } from './getFingerprint';
-import { getIsIncognito } from './getIsIncognito';
-import { getSearchValue } from './getSearchValue';
-import { getUserAgent } from './getUserAgent';
-import { getSessionId } from './getSessionId';
-import { getReferrer } from './getReferrer';
-import { getTimeZone } from './getTimeZone';
-import { getHref } from './getHref';
 import { getConfig } from './config';
+import { fillEvent } from './fillEvent';
+
+/**
+ * Дополнительные параметры события.
+ */
+type Params = Omit<Event, 'name' | 'sessionId'>;
 
 /**
  * Отправляет указанное событие в сервис аналитики.
- * @param event Название события.
+ * @param name Название события.
  * @param params Дополнительные параметры события.
  */
-export const send = async (event: string, params: Params = {}) => {
+export const send = async (name: string, params: Params = {}) => {
+  const event: Event = { name, ...params };
+
   const config = getConfig();
+
+  if (config.beforeSend) {
+    config.beforeSend(event);
+  }
+
+  fillEvent(event);
 
   const headers = createHeaders({
     [`Content-Type`]: 'application/json',
     [`Accept`]: 'application/json',
-    [`User-Agent`]: params.userAgent ?? getUserAgent(),
-    [`X-UserID`]: params.userId,
+    [`User-Agent`]: event.userAgent,
+    [`X-UserID`]: event.userId,
     [`X-API-KEY`]: config.id || undefined,
-    [`X-SessionID`]: getSessionId(params.logout),
+    [`X-SessionID`]: event.sessionId,
   });
 
   const body = createBody({
-    event,
-    eventValue: params.payload,
-    fingerprintID: params.fingerprint ?? getFingerprint(),
-    referer: params.referrer ?? getReferrer(),
-    source: params.utmSource ?? getSearchValue('utm_source'),
-    campaign: params.utmCampaign ?? getSearchValue('utm_campaign'),
-    medium: params.utmMedium ?? getSearchValue('utm_medium'),
-    content: params.utmContent ?? getSearchValue('utm_content'),
-    term: params.utmTerm ?? getSearchValue('utm_term'),
-    screenHeight: params.screenHeight ?? getScreenHeight(),
-    screenWidth: params.screenWidth ?? getScreenWidth(),
-    isIncognito: await getIsIncognito(),
-    localTime: stringifyTime(params.time ?? new Date()),
-    timeZone:
-      params.timezone == null
-        ? getTimeZone()
-        : stringifyTimezone(params.timezone),
-    page: params.href ?? getHref(),
+    event: event.name,
+    eventValue: event.payload,
+    fingerprintID: event.fingerprint,
+    referer: event.referrer,
+    source: event.utmSource,
+    campaign: event.utmCampaign,
+    medium: event.utmMedium,
+    content: event.utmContent,
+    term: event.utmTerm,
+    screenHeight: event.screenHeight,
+    screenWidth: event.screenWidth,
+    isIncognito: event.isIncognito,
+    localTime: stringifyTime(event.time as Date),
+    timeZone: stringifyTimezone(event.timezone as number),
+    page: event.href,
   });
 
-  if (params.verbose && typeof console !== 'undefined') {
-    console.debug('clickhouse_event', event, body);
+  if (config.verbose && typeof console !== 'undefined') {
+    console.debug('clickhouse_event', event);
   }
 
   if (config.url) {

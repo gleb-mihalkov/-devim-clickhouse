@@ -2,11 +2,7 @@ import * as Cookie from 'js-cookie';
 import { v4 } from 'uuid';
 
 import { getDomain } from './getDomain';
-
-/**
- * Названиек ключа, по которому значение хранится в куках.
- */
-const KEY = 'dvmclckf';
+import { CookieKey } from './CookieKey';
 
 /**
  * Возвращает уникальный идентификатор устройства, на котором пользователь
@@ -17,15 +13,15 @@ export const getFingerprint = () => {
     return undefined;
   }
 
-  let fingerprint: string | undefined = Cookie.get(KEY);
+  let fingerprint: string | undefined = Cookie.get(CookieKey.FINGERPRINT);
 
-  if (fingerprint != null) {
+  if (fingerprint) {
     return fingerprint;
   }
 
   fingerprint = v4();
 
-  Cookie.set(KEY, fingerprint, {
+  Cookie.set(CookieKey.FINGERPRINT, fingerprint, {
     domain: getDomain(),
     expires: 365,
   });

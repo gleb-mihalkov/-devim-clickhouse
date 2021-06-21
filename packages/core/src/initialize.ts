@@ -1,14 +1,9 @@
-import { getConfig, setConfig } from './config';
+import { Config, setConfig } from './config';
 
 /**
  * Инициализирует сервис отправки событий.
- * @param url Адрес ClickHouse API.
- * @param id Уникальный идентификатор сайта.
+ * @param config Объект конфигурации.
  */
-export const initialize = (url: string, id: string) => {
-  const config = getConfig();
-
-  if (config.url !== url || config.id !== id) {
-    setConfig({ url, id });
-  }
+export const initialize = (config: Config) => {
+  setConfig(config);
 };
