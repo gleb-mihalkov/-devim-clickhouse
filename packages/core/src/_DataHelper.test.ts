@@ -90,42 +90,102 @@ describe(`${CLASS}`, () => {
   });
 
   describe(`${CLASS}.getUserAgent`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      DataHelper.getUserAgent();
+    });
   });
 
   describe(`${CLASS}.getReferrer`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      DataHelper.getReferrer();
+    });
   });
 
   describe(`${CLASS}.getSearch`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should returns an empty object for an empty string', () => {
+      expect(DataHelper.getSearch('')).toEqual({});
+    });
+
+    it(`should ignore trailing ?`, () => {
+      expect(DataHelper.getSearch('?')).toEqual({});
+    });
+
+    it(`should parse a simple parameters`, () => {
+      expect(DataHelper.getSearch('foo=foo&bar=bar')).toEqual({
+        foo: 'foo',
+        bar: 'bar',
+      });
+    });
+
+    it(`should ignore a trailing &`, () => {
+      expect(DataHelper.getSearch('foo=bar&')).toEqual({
+        foo: 'bar',
+      });
+    });
+
+    it(`should ignore unessesary &`, () => {
+      expect(DataHelper.getSearch('?foo=foo&&bar=bar&')).toEqual({
+        foo: 'foo',
+        bar: 'bar',
+      });
+    });
+
+    it(`should parse an empty values`, () => {
+      expect(DataHelper.getSearch('foo=&bar&xyz=xyz')).toEqual({
+        foo: '',
+        bar: '',
+        xyz: 'xyz',
+      });
+    });
+
+    it(`should decode values or keys`, () => {
+      expect(
+        DataHelper.getSearch('%D1%84%D1%83%D1%83=%D0%B1%D0%B0%D1%80')
+      ).toEqual({
+        фуу: 'бар',
+      });
+    });
+
+    it(`should use first meet key in a row`, () => {
+      expect(DataHelper.getSearch('foo=foo&foo=bar')).toEqual({
+        foo: 'foo',
+      });
+    });
+
+    it(`should read a single key`, () => {
+      expect(DataHelper.getSearch('foo')).toEqual({
+        foo: '',
+      });
+    });
   });
 
   describe(`${CLASS}.getScreenHeight`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      DataHelper.getScreenHeight();
+    });
   });
 
   describe(`${CLASS}.getScreenWidth`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      DataHelper.getScreenWidth();
+    });
   });
 
   describe(`${CLASS}.getIsIncognito`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      return expect(DataHelper.getIsIncognito()).resolves.toBe(false);
+    });
   });
 
   describe(`${CLASS}.getTimeZone`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      expect(DataHelper.getTimeZone()).toBe(0);
+    });
   });
 
   describe(`${CLASS}.getTime`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should work', () => {
+      expect(DataHelper.getTime());
+    });
   });
 });

@@ -90,16 +90,14 @@ export default class DataHelper {
   }
 
   /**
-   * Возвращает коллекцию параметров адреса текущей страницы.
+   * Возвращает коллекцию параметров адреса страницы. По умолчанию разбирается
+   * текущий адрес.
+   * @param search Опционально, часть параметров адреса.
    */
-  public static getSearch() {
-    if (typeof location === 'undefined') {
-      return {};
-    }
+  public static getSearch(search: string = location.search) {
+    const pureSearch = search.replace(/^\?/, '');
 
-    const search = location.search.replace(/^\?/, '');
-
-    const chunks = search.split(/&/g);
+    const chunks = pureSearch.split(/&/g);
     const { length } = chunks;
 
     const params: Record<string, string> = {};
@@ -144,10 +142,6 @@ export default class DataHelper {
     return new Promise<boolean | undefined>((resolve) => {
       const yes = () => resolve(true); // is in private mode
       const not = () => resolve(false); // not in private mode
-
-      if (typeof window === 'undefined') {
-        return resolve(undefined);
-      }
 
       function detectChromeOpera(): boolean {
         // https://developers.google.com/web/updates/2017/08/estimating-available-storage-space
@@ -266,7 +260,8 @@ export default class DataHelper {
     offset *= -1;
     offset /= 60;
     offset = Math.ceil(offset);
-    return offset;
+    // Для timezone важен знак. `Math.ceil` может вернуть как '+0', так и '-0'.
+    return offset === 0 ? 0 : offset;
   }
 
   /**
