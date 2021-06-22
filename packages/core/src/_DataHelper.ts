@@ -18,17 +18,16 @@ export default class DataHelper {
 
   /**
    * Возвращает домен, который используется для хранения куков.
+   * @param hostname Полное название хоста.
    */
-  private static getDomain() {
-    const { hostname } = location;
-
+  private static getDomain(hostname: string = location.hostname) {
     const local = hostname.indexOf('.') < 0;
 
     if (local) {
       return hostname;
     }
 
-    const ip = /^\d{4}\.\d{4}\.\d{4}\.\d{4}$/.test(hostname);
+    const ip = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname);
 
     if (ip) {
       return hostname;
