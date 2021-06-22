@@ -1,6 +1,29 @@
+let mockCookieValues: Record<string, string> = {};
+
+jest.mock('js-cookie', () => ({
+  get: jest.fn((name: string) => mockCookieValues[name]),
+
+  set: jest.fn((name: string, value: string) => {
+    mockCookieValues[name] = value;
+  }),
+
+  remove: jest.fn((name: string) => {
+    delete mockCookieValues[name];
+  }),
+}));
+
 import DataHelper from './_DataHelper';
+import CookieKey from './_CookieKey';
 
 const CLASS = 'DataHelper';
+
+beforeEach(() => {
+  mockCookieValues = {};
+});
+
+afterAll(() => {
+  jest.unmock('js-cookie');
+});
 
 describe(`${CLASS}`, () => {
   describe(`${CLASS}.getHref`, () => {
@@ -37,13 +60,33 @@ describe(`${CLASS}`, () => {
   });
 
   describe(`${CLASS}.getDeviceId`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should set an ID into cookie if it is undefined', () => {
+      const deviceId = DataHelper.getDeviceId();
+      expect(deviceId).toBe(mockCookieValues[CookieKey.DEVICE_ID]);
+    });
+
+    it(`should return an existing ID from cookies`, () => {
+      mockCookieValues[CookieKey.DEVICE_ID] = 'foo';
+      expect(DataHelper.getDeviceId()).toBe('foo');
+    });
   });
 
   describe(`${CLASS}.getSessionId`, () => {
-    // TODO: implement
-    it('mock', () => {});
+    it('should generate a new ID if it is undefined', () => {
+      expect(DataHelper.getSessionId()).toBe(
+        mockCookieValues[CookieKey.SESSION_ID]
+      );
+    });
+
+    it(`should return an existing ID from cookies`, () => {
+      mockCookieValues[CookieKey.SESSION_ID] = 'foo';
+      expect(DataHelper.getSessionId()).toBe('foo');
+    });
+
+    it(`should renews an ID if a flag is specified`, () => {
+      mockCookieValues[CookieKey.SESSION_ID] = 'foo';
+      expect(DataHelper.getSessionId(true)).not.toBe('foo');
+    });
   });
 
   describe(`${CLASS}.getUserAgent`, () => {

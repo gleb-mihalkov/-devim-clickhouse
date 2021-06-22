@@ -21,12 +21,6 @@ export default class DataHelper {
    * @param hostname Полное название хоста.
    */
   private static getDomain(hostname: string = location.hostname) {
-    const local = hostname.indexOf('.') < 0;
-
-    if (local) {
-      return hostname;
-    }
-
     const ip = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname);
 
     if (ip) {
@@ -47,24 +41,20 @@ export default class DataHelper {
    * просматривает сайт.
    */
   public static getDeviceId() {
-    if (typeof location === 'undefined') {
-      return undefined;
+    let deviceId: string | undefined = Cookie.get(CookieKey.DEVICE_ID);
+
+    if (deviceId) {
+      return deviceId;
     }
 
-    let fingerprint: string | undefined = Cookie.get(CookieKey.DEVICE_ID);
+    deviceId = v4();
 
-    if (fingerprint) {
-      return fingerprint;
-    }
-
-    fingerprint = v4();
-
-    Cookie.set(CookieKey.DEVICE_ID, fingerprint, {
+    Cookie.set(CookieKey.DEVICE_ID, deviceId, {
       domain: this.getDomain(),
       expires: 365,
     });
 
-    return fingerprint;
+    return deviceId;
   }
 
   /**
