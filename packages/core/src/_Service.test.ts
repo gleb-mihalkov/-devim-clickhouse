@@ -1,4 +1,4 @@
-import { enableFetchMocks, disableFetchMocks } from 'jest-fetch-mock';
+import { enableFetchMocks } from 'jest-fetch-mock';
 
 let mockCookieValues: Record<string, string> = {};
 
