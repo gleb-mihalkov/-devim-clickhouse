@@ -13,7 +13,7 @@ export default class DataHelper {
    * (допустим, код был вызван на сервере), метод возвращает `undefined`.
    */
   public static getHref() {
-    return typeof location === 'undefined' ? undefined : location.href;
+    return location.href;
   }
 
   /**
@@ -79,14 +79,14 @@ export default class DataHelper {
    * Определение происходит на основе свойства `navigator.userAgent`.
    */
   public static getUserAgent() {
-    return typeof navigator === 'undefined' ? undefined : navigator.userAgent;
+    return navigator.userAgent;
   }
 
   /**
    * Возвращает содержимое заголовка Referrer запроса к текущей странице.
    */
   public static getReferrer() {
-    return typeof document === 'undefined' ? undefined : document.referrer;
+    return document.referrer;
   }
 
   /**
@@ -124,20 +124,21 @@ export default class DataHelper {
    * Возвращает высоту экрана пользователя.
    */
   public static getScreenHeight() {
-    return typeof screen === 'undefined' ? undefined : screen.height;
+    return screen.height;
   }
 
   /**
    * Возвращает ширину экрана пользователя.
    */
   public static getScreenWidth() {
-    return typeof screen === 'undefined' ? undefined : screen.width;
+    return screen.width;
   }
 
   /**
    * Возвращает `true`, если пользователь использует режим "Инкогнито".
    * @see https://gist.github.com/jherax/a81c8c132d09cc354a0e2cb911841ff1#file-is-private-mode-ts
    */
+  /* istanbul ignore next */
   public static getIsIncognito() {
     return new Promise<boolean | undefined>((resolve) => {
       const yes = () => resolve(true); // is in private mode
@@ -260,7 +261,9 @@ export default class DataHelper {
     offset *= -1;
     offset /= 60;
     offset = Math.ceil(offset);
-    // Для timezone важен знак. `Math.ceil` может вернуть как '+0', так и '-0'.
+    // Для timezone важен знак, а `Math.ceil` может вернуть `-0`, что ломает
+    // проверку вида `=== 0`.
+    /* istanbul ignore next */
     return offset === 0 ? 0 : offset;
   }
 

@@ -157,6 +157,10 @@ describe(`${CLASS}`, () => {
         foo: '',
       });
     });
+
+    it(`should work with default search`, () => {
+      expect(DataHelper.getSearch()).toEqual({});
+    });
   });
 
   describe(`${CLASS}.getScreenHeight`, () => {

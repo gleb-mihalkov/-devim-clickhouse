@@ -62,7 +62,7 @@ export default class Service {
     }
 
     if (isNotExists('timezone')) {
-      event.timezone = DataHelper.getTimeZone(event.time);
+      event.timezone = DataHelper.getTimeZone();
     }
 
     if (isNotExists('href')) {
@@ -184,7 +184,8 @@ export default class Service {
     await this.beforeSend(event);
     await this.assignDefaults(event);
 
-    this.fetch(event);
     this.log(event);
+
+    await this.fetch(event);
   }
 }
