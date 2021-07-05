@@ -273,4 +273,29 @@ export default class DataHelper {
   public static getTime() {
     return new Date();
   }
+
+  /**
+   * Возвращает уникальный идентификатор визита пользователя на сайт. Если
+   * данный идентификатор ещё не был создан, возвращает `undefined`.
+   */
+  public static getVisitId() {
+    return Cookie.get(CookieKey.VISIT_ID);
+  }
+
+  /**
+   * Генерирует и записывает в cookies уникальный идентификатор визита
+   * пользователя на сайт. Данный идентификатор будет валидным, пока длится
+   * браузерная сессия.
+   */
+  public static setVisitId() {
+    if (this.getVisitId()) {
+      return;
+    }
+
+    const id = v4();
+
+    Cookie.set(CookieKey.VISIT_ID, id, {
+      domain: this.getDomain(),
+    });
+  }
 }

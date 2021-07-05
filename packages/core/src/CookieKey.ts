@@ -11,6 +11,11 @@ enum CookieKey {
    * Уникальный идентификатор устройства.
    */
   DEVICE_ID = 'dvmclckf',
+
+  /**
+   * Уникальный идентификатор визита пользователя на сайт.
+   */
+  VISIT_ID = 'dvmclckv',
 }
 
 export default CookieKey;

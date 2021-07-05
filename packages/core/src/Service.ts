@@ -201,4 +201,26 @@ export default class Service {
 
     await this.fetch(event);
   }
+
+  /**
+   * Отправляет событие `visit` в Clickhouse API. Событие сингнализирует о
+   * начале визита пользователя на сайт. Реальная отправка данного события
+   * происходит только после начала браузерной сессии. Все последующие вызовы
+   * метода ни к чему не приведут.
+   *
+   * Рекомендуется отправлять данное событие при `DOMContentLoaded` или первой
+   * отрисовке приложения (если мы говорим о SPA).
+   * @param params Параметры события.
+   */
+  public async sendVisit(params: Params = {}) {
+    const visitId = DataHelper.getVisitId();
+
+    if (visitId) {
+      return;
+    }
+
+    DataHelper.setVisitId();
+
+    await this.send('visit', params);
+  }
 }

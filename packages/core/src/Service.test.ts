@@ -452,4 +452,24 @@ describe(`${CLASS}`, () => {
       expect(fetch).toBeCalled();
     });
   });
+
+  describe(`${CLASS}.sendVisit`, () => {
+    it(`should send the event if it hasn't been sended yet`, async () => {
+      const service = new Service();
+      service.send = jest.fn(service.send);
+
+      await service.sendVisit();
+      expect(service.send).toBeCalled();
+    });
+
+    it(`shouldn't send the event if it has been sended`, async () => {
+      const service = new Service();
+      service.send = jest.fn(service.send);
+
+      await service.sendVisit();
+      await service.sendVisit();
+
+      expect(service.send).toBeCalledTimes(1);
+    });
+  });
 });

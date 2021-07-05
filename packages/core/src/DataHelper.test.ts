@@ -192,4 +192,24 @@ describe(`${CLASS}`, () => {
       expect(DataHelper.getTime());
     });
   });
+
+  describe(`${CLASS}.getVisitId`, () => {
+    it(`should work`, () => {
+      mockCookieValues[CookieKey.VISIT_ID] = 'foo';
+      expect(DataHelper.getVisitId()).toBe('foo');
+    });
+  });
+
+  describe(`${CLASS}.setVisitId`, () => {
+    it(`should assign a new value if it is undefined`, () => {
+      DataHelper.setVisitId();
+      expect(mockCookieValues[CookieKey.VISIT_ID]).toBeDefined();
+    });
+
+    it(`shouldn't override the value if it is defined`, () => {
+      mockCookieValues[CookieKey.VISIT_ID] = 'foo';
+      DataHelper.setVisitId();
+      expect(mockCookieValues[CookieKey.VISIT_ID]).toBe('foo');
+    });
+  });
 });
