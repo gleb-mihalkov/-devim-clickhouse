@@ -1,4 +1,4 @@
-import { bootstrap } from './bootstrap';
+import bootstrap from './bootstrap';
 
 if (typeof window !== 'undefined') {
   if (document.readyState === 'loading') {
