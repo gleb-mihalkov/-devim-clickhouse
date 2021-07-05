@@ -1,4 +1,4 @@
-import RequestHelper from './_RequestHelper';
+import RequestHelper from './RequestHelper';
 
 const CLASS = `RequestHelper`;
 

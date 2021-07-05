@@ -18,11 +18,11 @@ enableFetchMocks();
 
 jest.spyOn(console, 'debug').mockImplementation(() => {});
 
-import RequestHelper from './_RequestHelper';
-import DataHelper from './_DataHelper';
-import CookieKey from './_CookieKey';
-import Service from './_Service';
-import Event from './_Event';
+import RequestHelper from './RequestHelper';
+import DataHelper from './DataHelper';
+import CookieKey from './CookieKey';
+import Service from './Service';
+import Event from './Event';
 
 const CLASS = 'Service';
 

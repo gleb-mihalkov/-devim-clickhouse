@@ -12,8 +12,8 @@ jest.mock('js-cookie', () => ({
   }),
 }));
 
-import DataHelper from './_DataHelper';
-import CookieKey from './_CookieKey';
+import DataHelper from './DataHelper';
+import CookieKey from './CookieKey';
 
 const CLASS = 'DataHelper';
 

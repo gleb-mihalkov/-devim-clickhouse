@@ -3,9 +3,11 @@ import { Params } from '@devim-clickhouse/core';
 /**
  * Событие метрики.
  */
-export type Event = Params & {
+type Event = Params & {
   /**
    * Название события.
    */
   type: string;
 };
+
+export default Event;

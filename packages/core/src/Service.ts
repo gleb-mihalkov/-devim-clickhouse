@@ -1,8 +1,8 @@
-import Config from './_Config';
-import DataHelper from './_DataHelper';
-import Event from './_Event';
-import Params from './_Params';
-import RequestHelper from './_RequestHelper';
+import Config from './Config';
+import DataHelper from './DataHelper';
+import Event from './Event';
+import Params from './Params';
+import RequestHelper from './RequestHelper';
 
 /**
  * Сервис, предоставляющий методы для отправки событий в Clickhouse API.

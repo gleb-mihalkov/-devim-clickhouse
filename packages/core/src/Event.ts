@@ -1,7 +1,7 @@
 /**
  * Представляет событие, отправляемое на сервер ClickHouse.
  */
-export interface Event {
+interface Event {
   /**
    * Название события.
    */
@@ -36,7 +36,7 @@ export interface Event {
    * Уникальный идентификатор устройства, с которого пользователь зашел на
    * сайт.
    */
-  fingerprint?: string;
+  deviceId?: string;
 
   /**
    * Полный (включая домен) адрес страницы, с которой отправляется событие.
@@ -110,3 +110,5 @@ export interface Event {
    */
   utmContent?: string;
 }
+
+export default Event;

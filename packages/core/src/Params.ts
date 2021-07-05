@@ -1,4 +1,4 @@
-import Event from './_Event';
+import Event from './Event';
 
 /**
  * Коллекция параметров события.

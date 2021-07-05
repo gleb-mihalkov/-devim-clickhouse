@@ -1,7 +1,7 @@
 /**
  * Ключ, по которому в Cookie's хранится значение.
  */
-export enum CookieKey {
+enum CookieKey {
   /**
    * Идентификатор сессии.
    */
@@ -10,5 +10,7 @@ export enum CookieKey {
   /**
    * Уникальный идентификатор устройства.
    */
-  FINGERPRINT = 'dvmclckf',
+  DEVICE_ID = 'dvmclckf',
 }
+
+export default CookieKey;

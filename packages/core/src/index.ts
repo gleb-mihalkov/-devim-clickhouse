@@ -1,3 +1,3 @@
-export * from './Params';
-export * from './initialize';
-export * from './send';
+export { default as Params } from './Params';
+export { default as Config } from './Config';
+export { default as Service } from './Service';

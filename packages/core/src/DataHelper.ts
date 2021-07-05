@@ -1,7 +1,7 @@
 import * as Cookie from 'js-cookie';
 import { v4 } from 'uuid';
 
-import CookieKey from './_CookieKey';
+import CookieKey from './CookieKey';
 
 /**
  * Содержит методы для получения пользовательских данных из браузера.
