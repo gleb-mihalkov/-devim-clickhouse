@@ -37,5 +37,6 @@ export default function flush(events: any[]) {
     }
 
     service = new Service(config);
+    service.sendVisit();
   }
 }
