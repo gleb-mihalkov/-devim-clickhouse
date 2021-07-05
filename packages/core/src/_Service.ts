@@ -88,6 +88,18 @@ export default class Service {
   }
 
   /**
+   * Вызывает пользовательский хук `beforeAssignDefaults` из конфигурации
+   * сервиса для указанного события.
+   * @param event Событие.
+   */
+  private async beforeAssignDefaults(event: Event) {
+    if (this.config.beforeAssignDefaults) {
+      const result = this.config.beforeAssignDefaults(event);
+      await Promise.resolve(result);
+    }
+  }
+
+  /**
    * Вызывает пользовательский хук `beforeSend` из конфигурации сервиса для
    * указанного события.
    * @param event Событие.
@@ -181,8 +193,9 @@ export default class Service {
   public async send(name: string, params: Params = {}) {
     const event: Event = { name, ...params };
 
-    await this.beforeSend(event);
+    await this.beforeAssignDefaults(event);
     await this.assignDefaults(event);
+    await this.beforeSend(event);
 
     this.log(event);
 
