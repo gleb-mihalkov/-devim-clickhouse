@@ -32,8 +32,8 @@ export default function flush(events: any[]) {
     let config: Config = {};
 
     if (typeof payload === 'object') {
-      const { beforeAssignDefaults, beforeSend, verbose, url, id } = payload;
-      config = { beforeAssignDefaults, beforeSend, verbose, url, id };
+      const { beforeAssignDefaults, beforeSend, verbose, url, id, clientId } = payload;
+      config = { beforeAssignDefaults, beforeSend, verbose, url, id, clientId };
     }
 
     service = new Service(config);
