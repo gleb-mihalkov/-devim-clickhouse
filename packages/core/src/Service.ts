@@ -123,6 +123,7 @@ export default class Service {
       [`User-Agent`]: event.userAgent,
       [`X-UserID`]: event.userId,
       [`X-API-KEY`]: this.config.id || undefined,
+      [`X-API-CLIENT-ID`]: this.config.clientId || undefined,
       [`X-SessionID`]: event.sessionId,
     });
   }
@@ -157,7 +158,7 @@ export default class Service {
    * @param event Событие.
    */
   private async fetch(event: Event) {
-    if (!this.config.url || !this.config.id) {
+    if (!this.config.url || !this.config.id || !this.config.clientId) {
       return;
     }
 
