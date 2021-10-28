@@ -109,6 +109,11 @@ interface Event {
    * страницы).
    */
   utmContent?: string;
+
+  /**
+   * Поле, которое отвечает за группу аб теста.
+   */
+  testGroup?: string;
 }
 
 export default Event;

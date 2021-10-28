@@ -147,6 +147,7 @@ export default class Service {
       screenWidth: event.screenWidth,
       isIncognito: event.isIncognito,
       localTime: RequestHelper.formatTime(event.time as Date),
+      testGroup: event.testGroup,
       timeZone: RequestHelper.formatTimezone(event.timezone as number),
       page: event.href,
     });
