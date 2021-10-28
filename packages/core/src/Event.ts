@@ -113,7 +113,7 @@ interface Event {
   /**
    * Поле, которое отвечает за группу аб теста.
    */
-  testGroup?: string;
+  testGroup?: Object;
 }
 
 export default Event;
