@@ -150,6 +150,7 @@ export default class Service {
       testGroup: event.testGroup,
       timeZone: RequestHelper.formatTimezone(event.timezone as number),
       page: event.href,
+      operator: event.operator,
     });
   }
 
