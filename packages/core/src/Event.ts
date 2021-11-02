@@ -115,6 +115,10 @@ interface Event {
    * пользователь.
    */
   operator?: boolean;
+  
+   * Поле, которое отвечает за группу аб теста.
+   */
+  testGroup?: Object;
 }
 
 export default Event;
