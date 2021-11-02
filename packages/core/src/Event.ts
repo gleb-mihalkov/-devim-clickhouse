@@ -109,6 +109,12 @@ interface Event {
    * страницы).
    */
   utmContent?: string;
+
+  /**
+   * Поле, которое говорит нам о том, что залогинен оператор через 0000 или
+   * пользователь.
+   */
+  operator?: boolean;
 }
 
 export default Event;

@@ -149,6 +149,7 @@ export default class Service {
       localTime: RequestHelper.formatTime(event.time as Date),
       timeZone: RequestHelper.formatTimezone(event.timezone as number),
       page: event.href,
+      operator: event.operator,
     });
   }
 
