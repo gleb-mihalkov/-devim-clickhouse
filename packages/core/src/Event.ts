@@ -119,7 +119,7 @@ interface Event {
   /**
    * Поле, которое отвечает за группу аб теста.
    */
-  testGroup?: Object;
+  testGroup?: any;
 }
 
 export default Event;
