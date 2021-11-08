@@ -151,6 +151,7 @@ export default class Service {
       timeZone: RequestHelper.formatTimezone(event.timezone as number),
       page: event.href,
       operator: event.operator,
+      userType: event.userType,
     });
   }
 
