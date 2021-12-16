@@ -152,6 +152,7 @@ export default class Service {
       page: event.href,
       operator: event.operator,
       userType: event.userType,
+      previousPage: event.previousPage,
     });
   }
 
