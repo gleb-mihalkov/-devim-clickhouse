@@ -1,6 +1,6 @@
 {
   "name": "devim-clickhouse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Сервисы интеграции с ClickHouse",
   "main": "index.js",
   "author": "gleb-mikhalkov",
