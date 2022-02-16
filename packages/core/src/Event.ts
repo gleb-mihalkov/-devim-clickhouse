@@ -127,9 +127,9 @@ interface Event {
   userType?: any;
 
   /**
-   * Информация о том, с какой страницы пользователь попал в ЛК
+   * Информация о том, какая была предыдущая страница
    */
-  previousPage?: string;
+  prevPage?: string;
 }
 
 export default Event;
